@@ -1,78 +1,30 @@
-# <img height="50px" src="./screenshots/logo.png" />
+# Library
 
-Library is a self-hostable bookmark-everything app with a touch of AI for people who keep everything.
-
-![homepage screenshot](./screenshots/homepage.png)
+Self-hostable bookmark-everything app with AI tagging, full-text search, and full-page archival.
 
 ## Features
 
-- 🔗 Bookmark links, take simple notes and store images and pdfs.
-- ⬇️ Automatic fetching for link titles, descriptions and images.
-- 📋 Sort your bookmarks into lists.
-- 👥 Collaborate with others on the same list.
-- 🔎 Full text search of all the content stored.
-- ✨ AI-based (aka chatgpt) automatic tagging and summarization. With supports for local models using ollama!
-- 🤖 Rule-based engine for customized management.
-- 🎆 OCR for extracting text from images.
-- 🔖 Browser extension (Chrome and Firefox) for quick bookmarking.
-- 📱 iOS and Android mobile apps (built with Expo, in `apps/mobile`).
-- 📰 Auto hoarding from RSS feeds.
-- 🔌 REST API and multiple clients.
-- 🌐 Multi-language support.
-- 🖍️ Mark and store highlights from your hoarded content.
-- 🗄️ Full page archival (using [monolith](https://github.com/Y2Z/monolith)) to protect against link rot.
-- ▶️ Auto video archiving using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
-- ☑️ Bulk actions support.
-- 🔐 SSO support.
-- 🌙 Dark mode support.
-- 💾 Self-hosting first.
-- ⬇️ Bookmark importers from Chrome, Pocket, Linkwarden, Omnivore, Tab Session Manager.
-- 🔄 Automatic sync with browser bookmarks via [floccus](https://floccus.org/).
-- [Planned] Offline reading on mobile, semantic search across bookmarks, ...
+- Bookmark links, notes, images, and PDFs; automatic title/description/image fetching
+- AI-based automatic tagging and summarization (OpenAI or local models via Ollama)
+- Full-text search of all stored content (Meilisearch)
+- Lists, collaboration, bulk actions, and a rule-based management engine
+- Full-page archival (monolith) and auto video archiving (yt-dlp) against link rot
+- OCR for extracting text from images
+- Browser extension (Chrome/Firefox), iOS/Android apps (Expo), CLI, REST API, and MCP server
+- RSS auto-ingestion, importers (Chrome, Pocket, Linkwarden, Omnivore), SSO support
 
-**⚠️ This app is under heavy development.**
+## Stack
 
-## Documentation
+Next.js (app router), tRPC, Drizzle ORM, NextAuth, Puppeteer, Meilisearch. Monorepo managed with Turborepo and pnpm.
 
-Full documentation lives in this repo under [`docs/docs/`](./docs/docs/):
+## Getting Started
 
 - [Installation](./docs/docs/02-installation)
 - [Configuration](./docs/docs/03-configuration)
 - [Using Library](./docs/docs/04-using-library)
 - [Administration](./docs/docs/06-administration)
-- [Development](./docs/docs/08-development)
-
-## Stack
-
-- [NextJS](https://nextjs.org/) for the web app. Using app router.
-- [Drizzle](https://orm.drizzle.team/) for the database and its migrations.
-- [NextAuth](https://next-auth.js.org) for authentication.
-- [tRPC](https://trpc.io) for client->server communication.
-- [Puppeteer](https://pptr.dev/) for crawling the bookmarks.
-- [OpenAI](https://openai.com/) because AI is so hot right now.
-- [Meilisearch](https://meilisearch.com) for the full content search.
-
-## Why did I build it?
-
-I browse reddit, twitter and hackernews a lot from my phone. I frequently find interesting stuff (articles, tools, etc) that I'd like to bookmark and read later when I'm in front of a laptop. Typical read-it-later apps usecase. Initially, I was using [Pocket](https://getpocket.com) for that. Then I got into self-hosting and I wanted to self-host this usecase. I used [memos](https://github.com/usememos/memos) for those quick notes and I loved it but it was lacking some features that I found important for that usecase such as link previews and automatic tagging (more on that in the next section).
-
-I'm a systems engineer in my day job (and have been for the past 7 years). I didn't want to get too detached from the web development world. I decided to build this app as a way to keep my hand dirty with web development, and at the same time, build something that I care about and use every day.
-
-## Alternatives
-
-- [memos](https://github.com/usememos/memos): I love memos. I have it running on my home server and it's one of my most used self-hosted apps. It doesn't, however, archive or preview the links shared in it. It's just that I dump a lot of links there and I'd have loved if I'd be able to figure which link is that by just looking at my timeline. Also, given the variety of things I dump there, I'd have loved if it does some sort of automatic tagging for what I save there. This is exactly the usecase that I'm trying to tackle with Library.
-- [mymind](https://mymind.com/): Mymind is the closest alternative to this project and from where I drew a lot of inspirations. It's a commercial product though.
-- [raindrop](https://raindrop.io): A polished open source bookmark manager that supports links, images and files. It's not self-hostable though.
-- Bookmark managers (mostly focused on bookmarking links):
-    - [Pocket](https://getpocket.com) (Dead): Pocket is what hooked me into the whole idea of read-it-later apps. I used it a lot. However, I recently got into home-labbing and became obsessed with the idea of running my services in my home server. Library is meant to be a self-hosting first app. Mozilla recently announced that it's shutting down pocket.
-    - [Linkwarden](https://linkwarden.app/): An open-source self-hostable bookmark manager that I ran for a bit in my homelab. It's focused mostly on links and supports collaborative collections.
-    - [Wallabag](https://wallabag.it): Wallabag is a well-established open source read-it-later app written in php.
-    - [Shiori](https://github.com/go-shiori/shiori): Shiori is meant to be an open source pocket clone written in Go.
-
-## Support
-
-If you're enjoying using Library, drop a ⭐️ on the repo!
+- [Development](./DEVELOPMENT.md)
 
 ## License
 
-Library is licensed under [AGPL-3.0](./LICENSE).
+[AGPL-3.0](./LICENSE)
