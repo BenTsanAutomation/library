@@ -37,7 +37,7 @@ All the URLs in the bookmarks file will be added automatically, you will not be 
 ## Import using the CLI
 
 :::warning
-Importing bookmarks using the CLI requires some technical knowledge and might not be very straightforward for non-technical users. Don't hesitate to ask questions in github discussions or discord though.
+Importing bookmarks using the CLI requires some technical knowledge and might not be very straightforward for non-technical users. Don't hesitate to ask questions in GitHub discussions.
 :::
 
 If you can get your bookmarks in a text file with one link per line, you can use the following command to import them using the [library cli](https://docs.library.example.com/command-line):
