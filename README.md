@@ -5,17 +5,11 @@
     <a href="https://github.com/your-org/library/releases">
         <img alt="GitHub Release" src="https://img.shields.io/github/v/release/your-org/library" />
     </a>
-    <a href="https://discord.gg/NrgeYywsFh">
-        <img alt="Discord" src="https://img.shields.io/discord/1223681308962721802?label=chat%20on%20discord" />
-    </a>
-    <a href="https://hosted.weblate.org/engage/library/">
-        <img src="https://hosted.weblate.org/widget/library/library/svg-badge.svg" alt="Translation status" />
-    </a>
 </div>
 
 # <img height="50px" src="./screenshots/logo.png" />
 
-Library (previously Library) is a self-hostable bookmark-everything app with a touch of AI for the data librarys out there.
+Library is a self-hostable bookmark-everything app with a touch of AI for people who keep everything.
 
 ![homepage screenshot](https://github.com/your-org/library/blob/main/screenshots/homepage.png?raw=true)
 
@@ -92,14 +86,10 @@ I'm a systems engineer in my day job (and have been for the past 7 years). I did
 - [mymind](https://mymind.com/): Mymind is the closest alternative to this project and from where I drew a lot of inspirations. It's a commercial product though.
 - [raindrop](https://raindrop.io): A polished open source bookmark manager that supports links, images and files. It's not self-hostable though.
 - Bookmark managers (mostly focused on bookmarking links):
-    - [Pocket](https://getpocket.com) (Dead): Pocket is what hooked me into the whole idea of read-it-later apps. I used it [a lot](https://blog.mbassem.com/2019/01/27/favorite-articles-2018/). However, I recently got into home-labbing and became obsessed with the idea of running my services in my home server. Library is meant to be a self-hosting first app. Mozilla recently announced that it's shutting down pocket.
+    - [Pocket](https://getpocket.com) (Dead): Pocket is what hooked me into the whole idea of read-it-later apps. I used it a lot. However, I recently got into home-labbing and became obsessed with the idea of running my services in my home server. Library is meant to be a self-hosting first app. Mozilla recently announced that it's shutting down pocket.
     - [Linkwarden](https://linkwarden.app/): An open-source self-hostable bookmark manager that I ran for a bit in my homelab. It's focused mostly on links and supports collaborative collections.
     - [Wallabag](https://wallabag.it): Wallabag is a well-established open source read-it-later app written in php.
     - [Shiori](https://github.com/go-shiori/shiori): Shiori is meant to be an open source pocket clone written in Go.
-
-## Translations
-
-Library uses Weblate for managing translations. If you want to help translate Library, you can do so [here](https://hosted.weblate.org/engage/library/).
 
 ## Library Cloud ☁️
 
@@ -108,13 +98,6 @@ If you're not comfortable with self-hosting, you can use our managed Library clo
 ## Support
 
 If you're enjoying using Library, drop a ⭐️ on the repo!
-
-<a href="https://www.buymeacoffee.com/mbassem" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
-## Community Channels
-
-- Join us on [Discord](https://discord.gg/NrgeYywsFh).
-- Follow us on Twitter: [@library_app](https://x.com/library_app).
 
 ## License
 
