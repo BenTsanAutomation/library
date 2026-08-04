@@ -39,7 +39,7 @@ Before starting to work on an issue:
 
 * Prefer working on `status/approved` issues to make sure they get prioritized for the review
 * Comment on the issue to let others know you're working on it
-* Read the [development documentation](https://docs.library.example.com/Development/setup) to get started
+* Read the [development documentation](./docs/docs/08-development) to get started
 * Once you're done, open a PR and wait for review. Try to include a screenshot of the change in the PR description.
 
 Please note that we're all volunteers. We'll aim to review your PR within a week from when they are opened.

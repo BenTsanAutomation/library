@@ -1,72 +1,29 @@
 # Library Development Guide
 
-## Production Instance
-
-- URL: https://library.example.com
-- Hosted on: Linux server (user@...)
-- Services managed by systemd user units: `library-dashboard`, `library-worker`, `library-tgbot`
-- Data: `/home/user/.openclaw/workspace/apps/library/data/` (SQLite)
-
-## Multi-device Development (Linux + Mac Mini)
-
-### Initial Mac Mini Setup
+## Setup
 
 ```bash
-# Clone the repo (it tracks upstream library — the fork is at this path)
-git clone https://github.com/your-org/library ~/library
-cd ~/library
-
-# Run the setup script
+git clone https://github.com/BenTsanAutomation/library
+cd library
 bash scripts/setup-dev.sh
 ```
 
-Then edit `.env` with the approach you want (see below).
+Then edit `.env` (see `docs/docs/03-configuration` for all options).
 
-### Option A: Develop against the production API
+## Running the full local stack
 
-Point the web app at the production backend. You get real data, no local infra needed. Best for frontend/UI work.
-
-```bash
-# In .env:
-API_URL=https://library.example.com
-NEXTAUTH_URL=http://localhost:3001
-# Leave MEILI_ADDR, REDIS_URL, BROWSER_WEB_URL pointing at localhost
-# (workers won't run, but the web UI will work)
-```
-
-Then:
-```bash
-pnpm web
-# Open http://localhost:3001
-```
-
-### Option B: Full local stack
-
-Run everything locally. Requires Docker for Chrome + Meilisearch, and Redis.
+Requires Docker (Chrome for crawling, Meilisearch for search) and Redis.
 
 ```bash
-# Start infra (Chrome for crawling, Meilisearch for search)
-docker compose up -d
-
-# Redis (if not already running)
-redis-server &
-
-# Start workers (background crawling, AI summarization)
-pnpm workers &
-
-# Start web
-pnpm web
+docker compose up -d      # Chrome + Meilisearch
+redis-server &            # if not already running
+pnpm workers &            # background crawling, AI summarization
+pnpm web                  # Next.js web UI
 ```
 
 The app will be at http://localhost:3001 with a fresh empty database.
 
-To work with a copy of production data:
-```bash
-# Copy the SQLite DB from the Linux server (read the real data)
-scp user@<server-ip>:/home/user/.openclaw/workspace/apps/library/data/db.db ./data/db.db
-```
-
-### Common Commands
+## Common Commands
 
 ```bash
 pnpm web              # Start Next.js web UI
@@ -77,16 +34,3 @@ pnpm typecheck        # TypeScript check
 pnpm lint             # Lint
 pnpm test             # Run tests
 ```
-
-### Restarting Production Services (Linux server)
-
-```bash
-systemctl --user restart library-dashboard
-systemctl --user restart library-worker
-systemctl --user restart library-tgbot
-```
-
-### Cloudflare Tunnel
-
-The public URL is managed by `main-tunnel.service` (systemd user unit) using cloudflared.
-Config: `~/.cloudflared/config.yml`

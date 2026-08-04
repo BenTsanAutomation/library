@@ -1,17 +1,8 @@
-<div align="center">
-    <a href="https://github.com/your-org/library/actions/workflows/ci.yml">
-        <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/your-org/library/ci.yml" />
-    </a>
-    <a href="https://github.com/your-org/library/releases">
-        <img alt="GitHub Release" src="https://img.shields.io/github/v/release/your-org/library" />
-    </a>
-</div>
-
 # <img height="50px" src="./screenshots/logo.png" />
 
 Library is a self-hostable bookmark-everything app with a touch of AI for people who keep everything.
 
-![homepage screenshot](https://github.com/your-org/library/blob/main/screenshots/homepage.png?raw=true)
+![homepage screenshot](./screenshots/homepage.png)
 
 ## Features
 
@@ -23,8 +14,8 @@ Library is a self-hostable bookmark-everything app with a touch of AI for people
 - ✨ AI-based (aka chatgpt) automatic tagging and summarization. With supports for local models using ollama!
 - 🤖 Rule-based engine for customized management.
 - 🎆 OCR for extracting text from images.
-- 🔖 [Chrome plugin](https://chromewebstore.google.com/detail/library/kgcjekpmcjjogibpjebkhaanilehneje) and [Firefox addon](https://addons.mozilla.org/en-US/firefox/addon/library/) for quick bookmarking.
-- 📱 An [iOS app](https://apps.apple.com/us/app/your-org/id6479258022), and an [Android app](https://play.google.com/store/apps/details?id=app.library.librarymobile&pcampaignid=web_share).
+- 🔖 Browser extension (Chrome and Firefox) for quick bookmarking.
+- 📱 iOS and Android mobile apps (built with Expo, in `apps/mobile`).
 - 📰 Auto hoarding from RSS feeds.
 - 🔌 REST API and multiple clients.
 - 🌐 Multi-language support.
@@ -43,26 +34,13 @@ Library is a self-hostable bookmark-everything app with a touch of AI for people
 
 ## Documentation
 
-- [Installation](https://docs.library.example.com/Installation/docker)
-- [Configuration](https://docs.library.example.com/configuration)
-- [Screenshots](https://docs.library.example.com/screenshots)
-- [Security Considerations](https://docs.library.example.com/security-considerations)
-- [Development](https://docs.library.example.com/Development/setup)
+Full documentation lives in this repo under [`docs/docs/`](./docs/docs/):
 
-## Demo
-
-You can access the demo at [https://try.library.example.com](https://try.library.example.com). Login with the following creds:
-
-```
-email: demo@library.example.com
-password: demodemo
-```
-
-The demo is seeded with some content, but it's in read-only mode to prevent abuse.
-
-## About the name
-
-The name Library is inspired by the Arabic word "كراكيب" (karakeeb), a colloquial term commonly used to refer to miscellaneous clutter, odds and ends, or items that may seem disorganized but often hold personal value or hidden usefulness. It evokes the image of a messy drawer or forgotten box, full of stuff you can't quite throw away—because somehow, it matters (or more likely, because you're a library!).
+- [Installation](./docs/docs/02-installation)
+- [Configuration](./docs/docs/03-configuration)
+- [Using Library](./docs/docs/04-using-library)
+- [Administration](./docs/docs/06-administration)
+- [Development](./docs/docs/08-development)
 
 ## Stack
 
@@ -91,18 +69,10 @@ I'm a systems engineer in my day job (and have been for the past 7 years). I did
     - [Wallabag](https://wallabag.it): Wallabag is a well-established open source read-it-later app written in php.
     - [Shiori](https://github.com/go-shiori/shiori): Shiori is meant to be an open source pocket clone written in Go.
 
-## Library Cloud ☁️
-
-If you're not comfortable with self-hosting, you can use our managed Library cloud at [cloud.library.example.com](https://cloud.library.example.com). Cloud subscriptions support the development of Library.
-
 ## Support
 
 If you're enjoying using Library, drop a ⭐️ on the repo!
 
 ## License
 
-Library is licensed under [AGPL-3.0](https://github.com/your-org/library/blob/main/LICENSE) and owned by [Localhost Labs Ltd](https://localhostlabs.co.uk).
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=your-org/library&type=Date)](https://star-history.com/#your-org/library&Date)
+Library is licensed under [AGPL-3.0](./LICENSE).
