@@ -1,0 +1,17 @@
+<svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="library">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;display=swap');
+      .lb-mark { fill: #F4EFE8; }
+      .lb-word { font-family: 'Instrument Serif', 'Times New Roman', serif; font-style: italic; font-size: 56px; fill: #F4EFE8; letter-spacing: -1.5px; }
+    </style>
+  </defs>
+  <g transform="translate(8, 12)" class="lb-mark">
+    <circle cx="16" cy="16" r="6.5"/>
+    <circle cx="40" cy="20" r="2.6"/>
+    <circle cx="46" cy="36" r="2"/>
+    <circle cx="32" cy="44" r="3.2"/>
+    <line x1="6" y1="52" x2="22" y2="52" stroke="#F4EFE8" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <text x="80" y="58" class="lb-word">library</text>
+</svg>

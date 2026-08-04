@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "library",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo --no-daemon build",
+    "dev": "turbo --no-daemon dev --parallel",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo --no-daemon clean",
+    "db:generate": "pnpm --filter @library/db run generate",
+    "db:migrate": "pnpm --filter @library/db run migrate",
+    "db:studio": "pnpm --filter @library/db studio",
+    "workers": "pnpm --filter @library/workers run start",
+    "web": "pnpm --filter @library/web run dev",
+    "web:portless": "pnpm --filter @library/web run dev:portless",
+    "android": "pnpm --filter @library/mobile android",
+    "ios": "pnpm --filter @library/mobile ios",
+    "prepare": "husky",
+    "format": "turbo --no-daemon format --continue",
+    "format:fix": "turbo --no-daemon format:fix --continue",
+    "lint": "turbo --no-daemon lint --continue",
+    "lint:fix": "turbo --no-daemon lint:fix --continue",
+    "test": "turbo --no-daemon test",
+    "typecheck": "turbo --no-daemon typecheck",
+    "preflight": "turbo run --no-daemon typecheck lint format",
+    "preflight:fix": "turbo run --no-daemon typecheck lint:fix format:fix"
+  },
+  "dependencies": {
+    "husky": "^9.0.11"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
+    "sherif": "^1.6.1",
+    "turbo": "^2.5.5"
+  },
+  "packageManager": "pnpm@9.15.9",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "re2"
+    ],
+    "patchedDependencies": {
+      "xcode@3.0.1": "patches/xcode@3.0.1.patch",
+      "playwright-extra@4.3.6": "patches/playwright-extra@4.3.6.patch"
+    }
+  }
+}

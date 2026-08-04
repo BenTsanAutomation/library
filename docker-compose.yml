@@ -1,0 +1,13 @@
+services:
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:124
+    container_name: library-chrome
+    restart: unless-stopped
+    network_mode: host
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=127.0.0.1
+      - --remote-debugging-port=9222
+      - --hide-scrollbars

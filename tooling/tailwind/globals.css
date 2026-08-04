@@ -1,0 +1,534 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  :root[data-theme="light"] {
+    --bg-base: #f4efe8;
+    --bg-surface: #ffffff;
+    --bg-elevated: #fbf7f0;
+    --bg-inset: #ece5da;
+
+    --fg-primary: #1a1815;
+    --fg-secondary: #4a453e;
+    --fg-muted: #8b847a;
+    --fg-faint: #c5beb1;
+
+    --accent: #c8693a;
+    --accent-soft: #f0dfd2;
+
+    --pin: #2b5f4a;
+    --pin-soft: #dce6df;
+
+    --type-article: #2d3f5c;
+    --type-product: #6b5c8c;
+    --type-book: #7a4520;
+    --type-recipe: #8b6b2a;
+    --type-video: #5b2d1f;
+    --type-note: #4a453e;
+    --type-tweet: #1f3d5b;
+
+    --radius-sm: 4px;
+    --radius-md: 10px;
+    --radius-lg: 18px;
+    --radius-pill: 999px;
+  }
+
+  :root[data-theme="dark"] {
+    --bg-base: #0e0d0c;
+    --bg-surface: #1a1815;
+    --bg-elevated: #25201a;
+    --bg-inset: #15130f;
+
+    /* GLOBAL CONTRAST RULE (dark mode):
+       Boxes stay dark, text stays bright. The previous --fg-muted (#8b847a,
+       L≈53%) failed legibility on the dark surfaces — labels and meta lines
+       read as ghost text. Bumped to a warm light grey that's still visually
+       quieter than fg-primary but always clearly readable on any dark box. */
+    --fg-primary: #f4efe8;
+    --fg-secondary: #e6dfd2;
+    --fg-muted: #c5beb1;
+    --fg-faint: #8b847a;
+
+    --accent: #e08658;
+    --accent-soft: #2a1c12;
+
+    --pin: #6fb58f;
+    --pin-soft: #1a2a20;
+
+    --type-article: #6b8ab8;
+    --type-product: #a593c9;
+    --type-book: #c49370;
+    --type-recipe: #d9b564;
+    --type-video: #d08465;
+    --type-note: #cfc8bc;
+    --type-tweet: #6b95c2;
+  }
+
+  .dark,
+  :root[class~="dark"] {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    /* Was: 215 20.2% 65.1% (L=65, low contrast against dark muted bg).
+       Bumped lightness so any text using `text-muted-foreground` on any
+       dark surface stays clearly legible — not pure white, but always
+       "vastly different" from the box behind it. */
+    --muted-foreground: 40 18% 86%;
+
+    --destructive: 0 80% 45%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+
+  :root:not([data-theme]) {
+    --bg-base: #f4efe8;
+    --bg-surface: #ffffff;
+    --bg-elevated: #fbf7f0;
+    --bg-inset: #ece5da;
+    --fg-primary: #1a1815;
+    --fg-secondary: #4a453e;
+    --fg-muted: #8b847a;
+    --fg-faint: #c5beb1;
+    --accent-soft: #f0dfd2;
+    --pin: #2b5f4a;
+    --pin-soft: #dce6df;
+    --type-article: #2d3f5c;
+    --type-product: #6b5c8c;
+    --type-book: #7a4520;
+    --type-recipe: #8b6b2a;
+    --type-video: #5b2d1f;
+    --type-note: #4a453e;
+    --type-tweet: #1f3d5b;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    background: var(--bg-base);
+    color: var(--fg-primary);
+  }
+}
+
+@layer components {
+  /* Library — note card paper-cream tint (per design brief §6) */
+  .library-card-note > * {
+    background-color: var(--bg-elevated);
+  }
+
+  /* Library — bookmark preview detail sidebar.
+     User explicitly requested a dark panel with brighter text
+     (vs. the default low-contrast bg-muted/40 + text-muted-foreground
+     stack which renders as light-grey-on-light in light theme). */
+  .library-detail-panel {
+    background-color: #15130f;
+    color: #f4efe8;
+  }
+  .library-detail-panel p,
+  .library-detail-panel span,
+  .library-detail-panel label {
+    color: #f4efe8;
+  }
+  .library-detail-label {
+    color: #cfc8bc;
+  }
+  .library-detail-link {
+    color: #cfc8bc;
+  }
+  .library-detail-link:hover {
+    color: #f4efe8;
+  }
+  /* Soften separator inside the dark panel so it doesn't blend out. */
+  .library-detail-panel [role="separator"],
+  .library-detail-panel hr {
+    background-color: rgba(244, 239, 232, 0.12);
+  }
+
+  /* Quick-save card has a HARDCODED cream/white surface in both themes
+     (intentional — it's the warm "paper" focal element). After syncing
+     `.dark` + `data-theme="dark"`, all `text-muted-foreground` /
+     `text-foreground` inside it would flip to bright in dark mode →
+     bright-on-cream = invisible. Force dark text for everything inside
+     the card so contrast stays high regardless of theme.
+     User rule: "Never have bright on bright or dark on dark." */
+  .library-quick-save,
+  .library-quick-save * {
+    color: #1a1815;
+  }
+  .library-quick-save .text-muted-foreground,
+  .library-quick-save [class*="text-muted-foreground"] {
+    color: #6a6259 !important;
+  }
+  .library-quick-save textarea::placeholder,
+  .library-quick-save input::placeholder {
+    color: #8b847a !important;
+  }
+  /* List-picker trigger inside the quick-save card lives on a dark
+     elevated chip — re-elevate text contrast for that one element. */
+  .library-quick-save .library-list-selector-trigger,
+  .library-quick-save .library-list-selector-trigger * {
+    color: #f4efe8 !important;
+  }
+
+  /* Top-right header toolbar (GlobalActions). The four icon buttons
+     (+, settings, bulk-edit, sort) used `variant="ghost"` which inherits
+     foreground color, and the surrounding bg-card/80 is dark — so the
+     icons rendered as dark-grey on dark-grey. Force full-bright fg with
+     a clear hover lift so every control is unmistakably visible. */
+  .library-global-toolbar button,
+  .library-global-toolbar [role="button"] {
+    color: var(--fg-primary) !important;
+  }
+  .library-global-toolbar button:hover,
+  .library-global-toolbar [role="button"]:hover {
+    background-color: rgba(244, 239, 232, 0.12) !important;
+  }
+  .library-global-toolbar svg {
+    opacity: 1;
+    color: inherit;
+    stroke-width: 2.2;
+  }
+  /* The "+" composer button has its own bright accent fill — don't let the
+     above rule blank out its white icon glyph. */
+  .library-global-toolbar button[aria-label="Open quick composer"] {
+    color: #ffffff !important;
+  }
+
+  /* List selector trigger (BookmarkListSelector) — used inside the quick
+     save card. The default outline button puts a near-foreground color
+     on a transparent bg-card, but inside the dark quick-save card the
+     button reads as dark-on-dark. Bump the surface to a slightly lifted
+     dark and the chevron to full opacity. */
+  .library-list-selector-trigger {
+    background-color: var(--bg-elevated) !important;
+    border-color: rgba(244, 239, 232, 0.18) !important;
+    color: var(--fg-primary) !important;
+  }
+  .library-list-selector-trigger:hover {
+    background-color: color-mix(in srgb, var(--bg-elevated) 80%, var(--fg-primary) 8%) !important;
+  }
+  .library-list-selector-trigger svg {
+    color: var(--fg-primary) !important;
+    opacity: 1 !important;
+  }
+
+  /* Bright "call to action" button — used for top-of-page primary actions
+     like "Make list". The default shadcn button uses bg-primary which on
+     this theme is near-black on the dark dashboard surface (invisible).
+     This variant uses the warm accent color so it reads as a clear CTA
+     regardless of theme. */
+  .library-cta-button {
+    background-color: var(--accent) !important;
+    color: #fff !important;
+    border: 1px solid color-mix(in srgb, var(--accent) 80%, #000 20%);
+  }
+  .library-cta-button:hover {
+    background-color: color-mix(in srgb, var(--accent) 88%, #000 12%) !important;
+  }
+
+  .library-inline-save-button {
+    background-color: #9ca3af !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .library-inline-save-button:hover {
+    background-color: #b0b7c2 !important;
+  }
+
+  .library-nav-button {
+    border-radius: 999px;
+    border: 1px solid rgba(244, 239, 232, 0.16);
+    background: rgba(244, 239, 232, 0.06);
+    padding: 0.45rem 0.7rem;
+  }
+  .library-nav-button:hover {
+    background: rgba(244, 239, 232, 0.12);
+  }
+
+  /* Card-image fallback — when a link has no thumbnail (Reddit selftext,
+     X tweets without media, etc.) the image slot used to render a 1×1
+     white pixel, leaving the card mostly empty. Render the title in big
+     readable text on a dark surface so the card is informative on its
+     own without the user having to click in. */
+  .library-link-titlecard {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.25rem 1rem;
+    background: linear-gradient(180deg, #25201a 0%, #15130f 100%);
+    color: #f4efe8;
+  }
+  .library-link-titlecard-title {
+    font-family: var(--font-display, ui-serif, Georgia, serif);
+    font-size: 1.05rem;
+    line-height: 1.3;
+    font-weight: 500;
+    color: #f4efe8;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .library-link-titlecard-host {
+    font-size: 0.7rem;
+    color: #8b847a;
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* YouTube prefetch — same shape as the Reddit block: title dominates,
+     "watch on YouTube" surfaced as a subtle action link. */
+  .library-youtube-post header {
+    margin-bottom: 1rem;
+  }
+  .library-youtube-post h1 {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    font-weight: 600;
+    margin: 0.25rem 0 0.75rem;
+    color: var(--fg-primary);
+  }
+  .library-youtube-post .yt-meta {
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+  .library-youtube-post .yt-watch,
+  .library-youtube-post .yt-channel {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    background: rgba(244, 239, 232, 0.04);
+    border-left: 2px solid #ff0033;
+    margin: 0.5rem 0;
+  }
+  .library-youtube-post .yt-watch a,
+  .library-youtube-post .yt-channel a {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  /* Reddit prefetch — title should dominate, body kept readable but
+     subordinate. The header sits at the top of the reader pane. */
+  .library-reddit-post header {
+    margin-bottom: 1rem;
+  }
+  .library-reddit-post h1 {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    font-weight: 600;
+    margin: 0.25rem 0 0.75rem;
+    color: var(--fg-primary);
+  }
+  .library-reddit-post .reddit-meta {
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+  .library-reddit-post p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+    color: var(--fg-secondary);
+  }
+  .library-reddit-post .reddit-external,
+  .library-reddit-post .reddit-crosspost {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    padding: 0.5rem 0.75rem;
+    background: rgba(244, 239, 232, 0.04);
+    border-left: 2px solid var(--accent);
+    margin: 0.75rem 0;
+    word-break: break-all;
+  }
+  .library-reddit-post .reddit-external a,
+  .library-reddit-post .reddit-crosspost a {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .library-reddit-post .reddit-comments {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(244, 239, 232, 0.08);
+  }
+  .library-reddit-post .reddit-comments h2 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fg-muted);
+    margin: 0 0 0.75rem;
+  }
+  .library-reddit-post .reddit-comments blockquote {
+    margin: 0 0 1rem;
+    padding: 0.6rem 0.85rem;
+    background: rgba(244, 239, 232, 0.03);
+    border-radius: 6px;
+    border: 1px solid rgba(244, 239, 232, 0.06);
+  }
+  .library-reddit-post .reddit-comments blockquote footer {
+    font-size: 0.7rem;
+    color: var(--fg-muted);
+    margin-bottom: 0.4rem;
+    text-transform: lowercase;
+  }
+  .library-reddit-post .reddit-comments blockquote p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+  }
+
+  /* Tone down bright Tailwind utility colors that look harsh on the dark
+     panel — tags container (was bg-background = white), AI tag chips
+     (bg-purple-500), manual tag chips (bg-accent = bright orange), and
+     the AI summary block (bg-accent). Replace each with a muted dark
+     surface + softer foreground so the panel reads as one calm dark
+     surface rather than a stack of bright stickers. */
+  .library-detail-panel .bg-background {
+    background-color: #1f1c17 !important;
+    border-color: rgba(244, 239, 232, 0.1) !important;
+    color: #f4efe8;
+  }
+  .library-detail-panel input,
+  .library-detail-panel textarea {
+    color: #f4efe8;
+  }
+  .library-detail-panel input::placeholder,
+  .library-detail-panel textarea::placeholder {
+    color: #8b847a;
+  }
+  .library-detail-panel .bg-accent {
+    background-color: #2a241d !important;
+    color: #e6dfd2 !important;
+  }
+  .library-detail-panel .bg-purple-500 {
+    background-color: #4a3a5e !important;
+    color: #e6dfd2 !important;
+  }
+  /* AI summary inside the panel — slightly more contrast against the
+     surrounding bg so the box is visible but not glaring. */
+  .library-detail-panel .bg-accent .markdown,
+  .library-detail-panel .bg-accent p,
+  .library-detail-panel .bg-accent li,
+  .library-detail-panel .bg-accent span {
+    color: #e6dfd2 !important;
+  }
+
+  /* Library — masonry grid (per design brief §5) */
+  .library-masonry {
+    column-count: 2;
+    column-gap: 24px;
+  }
+  @media (min-width: 768px) {
+    .library-masonry {
+      column-count: 3;
+    }
+  }
+  @media (min-width: 1024px) {
+    .library-masonry {
+      column-count: 4;
+    }
+  }
+  @media (min-width: 1280px) {
+    .library-masonry {
+      column-count: 5;
+    }
+  }
+  .library-masonry > * {
+    break-inside: avoid;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .text-display-2 {
+    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  /* Library — slide-over nav (per design brief §5) */
+  .library-nav-backdrop {
+    backdrop-filter: blur(8px);
+    background-color: rgba(20, 20, 20, 0.18);
+  }
+
+  /* Sleek scrollbar for sidebar only */
+  .sidebar-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.15);
+    border-radius: 3px;
+  }
+
+  .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.25);
+  }
+
+  /* Firefox scrollbar for sidebar */
+  .sidebar-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.15) transparent;
+  }
+}

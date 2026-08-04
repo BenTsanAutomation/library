@@ -1,0 +1,23 @@
+{
+  "fixtures": [
+    {
+      "match": {
+        "model": "gpt-4.1-mini",
+        "responseFormat": "json_schema",
+        "userMessage": "automatic tagging for a read-it-later/bookmarking app"
+      },
+      "response": {
+        "content": "{\"tags\":[\"ai-generated\",\"library\",\"worker-test\"]}"
+      }
+    },
+    {
+      "match": {
+        "model": "gpt-4.1-mini",
+        "userMessage": "Summarize the following content responding ONLY with the summary."
+      },
+      "response": {
+        "content": "This page contains a short Hello World test document used to verify Library's inference worker end-to-end."
+      }
+    }
+  ]
+}

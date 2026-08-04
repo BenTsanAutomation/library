@@ -1,0 +1,10 @@
+<svg viewBox="0 0 360 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="library">
+  <g transform="translate(8, 14)" fill="currentColor">
+    <circle cx="16" cy="14" r="6.5"/>
+    <circle cx="40" cy="18" r="2.6"/>
+    <circle cx="46" cy="34" r="2"/>
+    <circle cx="32" cy="42" r="3.2"/>
+    <line x1="6" y1="50" x2="22" y2="50" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <text x="80" y="56" font-family="'Iowan Old Style','Palatino Linotype','Times New Roman',Georgia,serif" font-style="italic" font-size="58" font-weight="400" letter-spacing="-1.5" fill="currentColor">library</text>
+</svg>

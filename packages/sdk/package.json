@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@library/sdk",
+  "version": "0.31.0",
+  "description": "Typescript SDK for Library",
+  "license": "GNU Affero General Public License version 3",
+  "keywords": [
+    "library",
+    "library",
+    "sdk"
+  ],
+  "main": "./src/index.ts",
+  "type": "module",
+  "publishConfig": {
+    "main": "./dist/index.js",
+    "exports": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts"
+  },
+  "devDependencies": {
+    "@library/tsconfig": "workspace:^0.1.0",
+    "@tsconfig/node22": "^22.0.0",
+    "openapi-typescript": "^7.6.1",
+    "tsx": "^4.8.1",
+    "vite": "^7.0.6",
+    "vite-plugin-dts": "^4.4.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "run": "tsx src/index.ts",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "format": "oxfmt --check .",
+    "format:fix": "oxfmt .",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/library.git",
+    "directory": "packages/sdk"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.13.3"
+  }
+}

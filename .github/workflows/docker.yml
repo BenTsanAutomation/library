@@ -1,0 +1,178 @@
+name: Build and Push Docker
+on:
+  release:
+    types:
+      - created
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [linux/amd64, linux/arm64]
+        image: [web, workers, cli, mcp, aio]
+        include:
+          - platform: linux/amd64
+            suffix: amd64
+            os: ubuntu-latest
+          - platform: linux/arm64
+            suffix: arm64
+            os: ubuntu-24.04-arm
+          - image: web
+            name: library-web
+            target: web
+            tags_latest: ghcr.io/library-app/library-web:latest,ghcr.io/mohamedbassem/library-web:latest,ghcr.io/your-org/library-web:latest
+            tags_release: ghcr.io/library-app/library-web:${{ github.event.release.name }},ghcr.io/mohamedbassem/library-web:${{ github.event.release.name }},ghcr.io/your-org/library-web:${{ github.event.release.name }},ghcr.io/library-app/library-web:release,ghcr.io/mohamedbassem/library-web:release,ghcr.io/your-org/library-web:release
+          - image: workers
+            name: library-workers
+            target: workers
+            tags_latest: ghcr.io/library-app/library-workers:latest,ghcr.io/mohamedbassem/library-workers:latest,ghcr.io/your-org/library-workers:latest
+            tags_release: ghcr.io/library-app/library-workers:${{ github.event.release.name }},ghcr.io/mohamedbassem/library-workers:${{ github.event.release.name }},ghcr.io/your-org/library-workers:${{ github.event.release.name }},ghcr.io/library-app/library-workers:release,ghcr.io/mohamedbassem/library-workers:release,ghcr.io/your-org/library-workers:release
+          - image: cli
+            name: library-cli
+            target: cli
+            tags_latest: ghcr.io/library-app/library-cli:latest,ghcr.io/mohamedbassem/library-cli:latest,ghcr.io/your-org/library-cli:latest
+            tags_release: ghcr.io/library-app/library-cli:${{ github.event.release.name }},ghcr.io/mohamedbassem/library-cli:${{ github.event.release.name }},ghcr.io/your-org/library-cli:${{ github.event.release.name }},ghcr.io/library-app/library-cli:release,ghcr.io/mohamedbassem/library-cli:release,ghcr.io/your-org/library-cli:release
+          - image: mcp
+            name: library-mcp
+            target: mcp
+            tags_latest: ghcr.io/your-org/library-mcp:latest
+            tags_release: ghcr.io/your-org/library-mcp:${{ github.event.release.name }},ghcr.io/your-org/library-mcp:release
+          - image: aio
+            name: library-aio
+            target: aio
+            tags_latest: ghcr.io/library-app/library:latest,ghcr.io/your-org/library:latest
+            tags_release: ghcr.io/library-app/library:${{ github.event.release.name }},ghcr.io/your-org/library:${{ github.event.release.name }},ghcr.io/library-app/library:release,ghcr.io/your-org/library:release
+    runs-on: ${{ matrix.os }}
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Github Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_GITHUB_PAT }}
+
+      - name: Prepare tags
+        id: tags
+        run: |
+          set -euo pipefail
+          add_suffix() {
+            local value="$1"
+            local out=""
+            IFS=',' read -ra items <<< "$value"
+            for item in "${items[@]}"; do
+              out+="${item}-${{ matrix.suffix }},"
+            done
+            echo "${out%,}"
+          }
+
+          all_tags=""
+
+          # Only push 'latest' tags on pushes to main, not on releases
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            latest_with_suffix=$(add_suffix "${{ matrix.tags_latest }}")
+            all_tags="${latest_with_suffix}"
+            echo "latest=${latest_with_suffix}" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Only push release-specific tags on releases
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            release_with_suffix=$(add_suffix "${{ matrix.tags_release }}")
+            all_tags="${release_with_suffix}"
+            echo "release=${release_with_suffix}" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "all=${all_tags}" >> "$GITHUB_OUTPUT"
+
+      - name: Build ${{ matrix.name }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          build-args: SERVER_VERSION=${{ github.event_name == 'release' && github.event.release.name || 'nightly' }}
+          file: docker/Dockerfile
+          target: ${{ matrix.target }}
+          platforms: ${{ matrix.platform }}
+          push: true
+          tags: ${{ steps.tags.outputs.all }}
+          cache-from: type=registry,ref=ghcr.io/your-org/library-build-cache:${{ matrix.target }}-${{ matrix.suffix }}
+          cache-to: type=registry,mode=max,ref=ghcr.io/your-org/library-build-cache:${{ matrix.target }}-${{ matrix.suffix }}
+
+  manifest:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: library-web
+            tags_latest: ghcr.io/library-app/library-web:latest,ghcr.io/mohamedbassem/library-web:latest,ghcr.io/your-org/library-web:latest
+            tags_release: ghcr.io/library-app/library-web:${{ github.event.release.name }},ghcr.io/mohamedbassem/library-web:${{ github.event.release.name }},ghcr.io/your-org/library-web:${{ github.event.release.name }},ghcr.io/library-app/library-web:release,ghcr.io/mohamedbassem/library-web:release,ghcr.io/your-org/library-web:release
+          - name: library-workers
+            tags_latest: ghcr.io/library-app/library-workers:latest,ghcr.io/mohamedbassem/library-workers:latest,ghcr.io/your-org/library-workers:latest
+            tags_release: ghcr.io/library-app/library-workers:${{ github.event.release.name }},ghcr.io/mohamedbassem/library-workers:${{ github.event.release.name }},ghcr.io/your-org/library-workers:${{ github.event.release.name }},ghcr.io/library-app/library-workers:release,ghcr.io/mohamedbassem/library-workers:release,ghcr.io/your-org/library-workers:release
+          - name: library-cli
+            tags_latest: ghcr.io/library-app/library-cli:latest,ghcr.io/mohamedbassem/library-cli:latest,ghcr.io/your-org/library-cli:latest
+            tags_release: ghcr.io/library-app/library-cli:${{ github.event.release.name }},ghcr.io/mohamedbassem/library-cli:${{ github.event.release.name }},ghcr.io/your-org/library-cli:${{ github.event.release.name }},ghcr.io/library-app/library-cli:release,ghcr.io/mohamedbassem/library-cli:release,ghcr.io/your-org/library-cli:release
+          - name: library-mcp
+            tags_latest: ghcr.io/your-org/library-mcp:latest
+            tags_release: ghcr.io/your-org/library-mcp:${{ github.event.release.name }},ghcr.io/your-org/library-mcp:release
+          - name: library-aio
+            tags_latest: ghcr.io/library-app/library:latest,ghcr.io/your-org/library:latest
+            tags_release: ghcr.io/library-app/library:${{ github.event.release.name }},ghcr.io/your-org/library:${{ github.event.release.name }},ghcr.io/library-app/library:release,ghcr.io/your-org/library:release
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Github Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_GITHUB_PAT }}
+
+      - name: Create manifests for ${{ matrix.name }}
+        env:
+          TAGS_LATEST: ${{ matrix.tags_latest }}
+          TAGS_RELEASE: ${{ matrix.tags_release }}
+          IS_RELEASE: ${{ github.event_name == 'release' }}
+          IS_PUSH: ${{ github.event_name == 'push' }}
+        run: |
+          set -euo pipefail
+
+          create_manifest() {
+            local tag="$1"
+            docker buildx imagetools create \
+              -t "${tag}" \
+              "${tag}-amd64" \
+              "${tag}-arm64"
+          }
+
+          # Only create 'latest' manifests on pushes to main
+          if [[ "${IS_PUSH}" == "true" ]]; then
+            IFS=',' read -ra latest_tags <<< "${TAGS_LATEST}"
+            for tag in "${latest_tags[@]}"; do
+              create_manifest "$tag"
+            done
+          fi
+
+          # Only create release-specific manifests on releases
+          if [[ "${IS_RELEASE}" == "true" ]]; then
+            IFS=',' read -ra release_tags <<< "${TAGS_RELEASE}"
+            for tag in "${release_tags[@]}"; do
+              create_manifest "$tag"
+            done
+          fi

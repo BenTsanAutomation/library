@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@library/plugins",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./queue-liteque": "./queue-liteque/index.ts",
+    "./queue-restate": "./queue-restate/index.ts",
+    "./ratelimit-memory": "./ratelimit-memory/index.ts",
+    "./ratelimit-redis": "./ratelimit-redis/index.ts",
+    "./search-meilisearch": "./search-meilisearch/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "format": "oxfmt --check .",
+    "format:fix": "oxfmt .",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@library/shared": "workspace:*",
+    "@restatedev/restate-sdk": "^1.10.3",
+    "@restatedev/restate-sdk-clients": "^1.10.3",
+    "async-mutex": "^0.4.1",
+    "liteque": "^0.8.0",
+    "meilisearch": "^0.45.0",
+    "redis": "^5.11.0"
+  },
+  "devDependencies": {
+    "@library/tsconfig": "workspace:^0.1.0",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^3.2.4"
+  }
+}
